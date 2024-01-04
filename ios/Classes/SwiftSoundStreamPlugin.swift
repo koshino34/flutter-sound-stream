@@ -59,7 +59,6 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         super.init()
         self.attachPlayer()
         mAudioEngine.prepare()
-        let audioSession = AVAudioSession.sharedInstance() do { try audioSession.overrideOutputAudioPort(.speaker) } catch { print("error overriding output audio port") }
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -253,6 +252,12 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         debugLogging = argsArr["showLogs"] as? Bool ?? debugLogging
         mPlayerInputFormat = AVAudioFormat(commonFormat: AVAudioCommonFormat.pcmFormatInt16, sampleRate: mPlayerSampleRate, channels: 1, interleaved: true)
         sendPlayerStatus(SoundStreamStatus.Initialized)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .allowBluetoothA2DP)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Audio session setup error: \(error.localizedDescription)")
+        }
     }
     
     private func attachPlayer() {
