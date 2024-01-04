@@ -243,8 +243,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private func initializePlayer(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothA2DP, .allowBluetooth, .defaultToSpeaker])
-            try audioSession.setPreferredInput(audioSession.availableInputs?.first { $0.portType == .headphones })
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothA2DP, .allowBluetooth])
             try audioSession.setActive(true)
         } catch {
             print("Audio session setup error: \(error.localizedDescription)")
