@@ -59,6 +59,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         super.init()
         self.attachPlayer()
         mAudioEngine.prepare()
+        let audioSession = AVAudioSession.sharedInstance() do { try audioSession.overrideOutputAudioPort(.speaker) } catch { print("error overriding output audio port") }
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
