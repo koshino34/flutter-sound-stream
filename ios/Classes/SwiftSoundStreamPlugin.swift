@@ -197,7 +197,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         let input = mAudioEngine.inputNode
         let inputFormat = input.inputFormat(forBus: mRecordBus)
         let converter = AVAudioConverter(from: inputFormat, to: mRecordFormat!)!
-        let ratio: Float = Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
+        let ratio: Float = 3.0 // Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
 
         print("inputFormat Sample Rate: \(inputFormat.sampleRate), mRecordFormat Sample Rate: \(mRecordFormat.sampleRate)")
         
@@ -207,7 +207,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
                 return buffer
             }
             
-            let convertedBuffer = AVAudioPCMBuffer(pcmFormat: self.mRecordFormat!, frameCapacity: UInt32(Float(buffer.frameCapacity) / 3.0))!
+            let convertedBuffer = AVAudioPCMBuffer(pcmFormat: self.mRecordFormat!, frameCapacity: UInt32(Float(buffer.frameCapacity) / ratio))!
             
             var error: NSError?
             let status = converter.convert(to: convertedBuffer, error: &error, withInputFrom: inputCallback)
