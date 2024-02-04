@@ -246,8 +246,9 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
             if let availableInputs = audioSession.availableInputs {
                 for input in availableInputs {
-                    if input.portType == .headphones {
+                    if input.portType == .headphones || input.portType == .bluetoothHFP  {
                         try audioSession.setPreferredInput(input)
+                        try audioSession.setPreferredInput(audioSession.availableInputs?.first(where: { $0.portType == .bluetoothHFP }))
                         break
                     }
                 }
