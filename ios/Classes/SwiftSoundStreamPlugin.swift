@@ -195,9 +195,22 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private func resetEngineForRecord() {
         mAudioEngine.inputNode.removeTap(onBus: mRecordBus)
         let input = mAudioEngine.inputNode
-        let inputFormat = input.outputFormat(forBus: mRecordBus)
+        // let inputFormat = input.outputFormat(forBus: mRecordBus)
         let converter = AVAudioConverter(from: inputFormat, to: mRecordFormat!)!
         let ratio: Float = Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
+
+        // エンジンを起動する前にサンプルレートを確認する
+        if let inputFormat = engine.inputNode.inputFormat(forBus: 0) {
+            print("Input Node Sample Rate: \(inputFormat.sampleRate)")
+        } else {
+            fatalError("Input node format not available")
+        }
+        
+        if let outputFormat = engine.outputNode.outputFormat(forBus: 0) {
+            print("Output Node Sample Rate: \(outputFormat.sampleRate)")
+        } else {
+            fatalError("Output node format not available")
+        }
         
         input.installTap(onBus: mRecordBus, bufferSize: mRecordBufferSize, format: inputFormat) { (buffer, time) -> Void in
             let inputCallback: AVAudioConverterInputBlock = { inNumPackets, outStatus in
@@ -243,7 +256,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private func initializePlayer(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
             // if let availableInputs = audioSession.availableInputs {
             //     for input in availableInputs {
             //         if input.portType == .headphones  {
