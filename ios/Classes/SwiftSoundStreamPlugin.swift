@@ -198,6 +198,8 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         let inputFormat = input.inputFormat(forBus: mRecordBus)
         let converter = AVAudioConverter(from: inputFormat, to: mRecordFormat!)!
         let ratio: Float = Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
+
+        print("inputFormat Sample Rate: \(inputFormat.sampleRate), mRecordFormat Sample Rate: \(mRecordFormat.sampleRate)")
         
         input.installTap(onBus: mRecordBus, bufferSize: mRecordBufferSize, format: inputFormat) { (buffer, time) -> Void in
             let inputCallback: AVAudioConverterInputBlock = { inNumPackets, outStatus in
