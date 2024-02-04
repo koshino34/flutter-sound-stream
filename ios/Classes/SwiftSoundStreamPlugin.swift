@@ -194,6 +194,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     
     private func resetEngineForRecord() {
         mAudioEngine.inputNode.removeTap(onBus: mRecordBus)
+        mAudioEngine.inputNode.audioUnitTimePitch.rate = Float(mRecordFormat.sampleRate / mAudioEngine.inputNode.inputFormat(forBus: mRecordBus).sampleRate)
         let input = mAudioEngine.inputNode
         let inputFormat = input.inputFormat(forBus: mRecordBus)
         let converter = AVAudioConverter(from: inputFormat, to: mRecordFormat!)!
