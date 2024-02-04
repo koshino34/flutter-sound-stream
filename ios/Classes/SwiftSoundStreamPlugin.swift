@@ -29,7 +29,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private let mRecordBus = 0
     private var mInputNode: AVAudioInputNode
     private var mRecordSampleRate: Double = 16000 // 16Khz
-    private var mRecordBufferSize: AVAudioFrameCount = 2730
+    private var mRecordBufferSize: AVAudioFrameCount = 8192
     private var mRecordChannel = 0
     private var mRecordSettings: [String:Int]!
     private var mRecordFormat: AVAudioFormat!
@@ -39,7 +39,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private let mPlayerBus = 0
     private let mPlayerNode = AVAudioPlayerNode()
     private var mPlayerSampleRate: Double = 16000 // 16Khz
-    private var mPlayerBufferSize: AVAudioFrameCount = 2730
+    private var mPlayerBufferSize: AVAudioFrameCount = 8192
     private var mPlayerOutputFormat: AVAudioFormat!
     private var mPlayerInputFormat: AVAudioFormat!
     
@@ -207,7 +207,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
                 return buffer
             }
             
-            let convertedBuffer = AVAudioPCMBuffer(pcmFormat: self.mRecordFormat!, frameCapacity: UInt32(Float(buffer.frameCapacity)))!
+            let convertedBuffer = AVAudioPCMBuffer(pcmFormat: self.mRecordFormat!, frameCapacity: UInt32(Float(buffer.frameCapacity) / 3.0))!
             
             var error: NSError?
             let status = converter.convert(to: convertedBuffer, error: &error, withInputFrom: inputCallback)
