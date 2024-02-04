@@ -200,13 +200,13 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         let ratio: Float = Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
 
         // エンジンを起動する前にサンプルレートを確認する
-        if let input_Format = engine.inputNode.inputFormat(forBus: 0) {
+        if let input_Format = mAudioEngine.inputNode.inputFormat(forBus: 0) {
             print("Input Node Sample Rate: \(input_Format.sampleRate)")
         } else {
             fatalError("Input node format not available")
         }
         
-        if let output_Format = engine.outputNode.outputFormat(forBus: 0) {
+        if let output_Format = mAudioEngine.outputNode.outputFormat(forBus: 0) {
             print("Output Node Sample Rate: \(output_Format.sampleRate)")
         } else {
             fatalError("Output node format not available")
