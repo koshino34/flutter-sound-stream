@@ -271,6 +271,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private func startPlayer(_ result: @escaping FlutterResult) {
         startEngine()
         if !mPlayerNode.isPlaying {
+            mPlayerNode.volume = 1.0
             mPlayerNode.play()
         }
         sendPlayerStatus(SoundStreamStatus.Playing)
