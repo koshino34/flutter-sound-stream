@@ -194,7 +194,6 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     
     private func resetEngineForRecord() {
         mAudioEngine.inputNode.removeTap(onBus: mRecordBus)
-        mAudioEngine.inputNode.audioUnitTimePitch.rate = Float(mRecordFormat.sampleRate / mAudioEngine.inputNode.inputFormat(forBus: mRecordBus).sampleRate)
         let input = mAudioEngine.inputNode
         let inputFormat = input.inputFormat(forBus: mRecordBus)
         let converter = AVAudioConverter(from: inputFormat, to: mRecordFormat!)!
@@ -247,6 +246,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+            try audioSession.setPreferredSampleRate(mRecordFormat.sampleRate)
             // if let availableInputs = audioSession.availableInputs {
             //     for input in availableInputs {
             //         if input.portType == .headphones  {
