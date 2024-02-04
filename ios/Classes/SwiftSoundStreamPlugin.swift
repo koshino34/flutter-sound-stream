@@ -195,22 +195,9 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private func resetEngineForRecord() {
         mAudioEngine.inputNode.removeTap(onBus: mRecordBus)
         let input = mAudioEngine.inputNode
-        let inputFormat = input.outputFormat(forBus: mRecordBus)
+        let inputFormat = input.inputFormat(forBus: mRecordBus)
         let converter = AVAudioConverter(from: inputFormat, to: mRecordFormat!)!
         let ratio: Float = Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
-
-        // エンジンを起動する前にサンプルレートを確認する
-        if let input_Format = mAudioEngine.inputNode.inputFormat(forBus: 0) {
-            print("Input Node Sample Rate: \(input_Format.sampleRate)")
-        } else {
-            fatalError("Input node format not available")
-        }
-        
-        if let output_Format = mAudioEngine.outputNode.outputFormat(forBus: 0) {
-            print("Output Node Sample Rate: \(output_Format.sampleRate)")
-        } else {
-            fatalError("Output node format not available")
-        }
         
         input.installTap(onBus: mRecordBus, bufferSize: mRecordBufferSize, format: inputFormat) { (buffer, time) -> Void in
             let inputCallback: AVAudioConverterInputBlock = { inNumPackets, outStatus in
