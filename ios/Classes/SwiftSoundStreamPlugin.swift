@@ -246,7 +246,6 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
-            try audioSession.setPreferredSampleRate(mRecordFormat.sampleRate)
             // if let availableInputs = audioSession.availableInputs {
             //     for input in availableInputs {
             //         if input.portType == .headphones  {
