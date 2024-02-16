@@ -44,7 +44,6 @@ enum class SoundStreamStatus {
 /** SoundStreamPlugin */
 public class SoundStreamPlugin : FlutterPlugin,
         MethodCallHandler,
-        PluginRegistry.RequestPermissionsResultListener,
         ActivityAware {
     private val logTag = "SoundStreamPlugin"
     private val audioRecordPermissionCode = 14887
@@ -177,21 +176,6 @@ public class SoundStreamPlugin : FlutterPlugin,
             ActivityCompat.requestPermissions(localActivity,
                     arrayOf(Manifest.permission.RECORD_AUDIO), audioRecordPermissionCode)
         }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?,
-                                            grantResults: IntArray?): Boolean {
-        when (requestCode) {
-            audioRecordPermissionCode -> {
-                if (grantResults != null) {
-                    permissionToRecordAudio = grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED
-                }
-                completeInitializeRecorder()
-                return true
-            }
-        }
-        return false
     }
 
     private fun initializeRecorder(@NonNull call: MethodCall, @NonNull result: Result) {
