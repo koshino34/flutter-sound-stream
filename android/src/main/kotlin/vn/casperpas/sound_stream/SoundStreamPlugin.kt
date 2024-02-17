@@ -197,7 +197,7 @@ public class SoundStreamPlugin : FlutterPlugin,
     private fun initializeRecorder(@NonNull call: MethodCall, @NonNull result: Result) {
         mRecordSampleRate = call.argument<Int>("sampleRate") ?: mRecordSampleRate
         debugLogging = call.argument<Boolean>("showLogs") ?: false
-        mPeriodFrames = AudioRecord.getMinBufferSize(mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat)
+        mPeriodFrames = 2730
         mRecorderBufferSize = mPeriodFrames * 2
         audioData = ShortArray(mPeriodFrames)
         activeResult = result
@@ -222,7 +222,7 @@ public class SoundStreamPlugin : FlutterPlugin,
         if (mRecorder?.state == AudioRecord.STATE_INITIALIZED) {
             return
         }
-        mRecorder = AudioRecord(MediaRecorder.AudioSource.MIC, mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat, 2730)
+        mRecorder = AudioRecord(MediaRecorder.AudioSource.MIC, mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat, mRecorderBufferSize)
         if (mRecorder != null) {
             mListener = createRecordListener()
             mRecorder?.positionNotificationPeriod = mPeriodFrames
