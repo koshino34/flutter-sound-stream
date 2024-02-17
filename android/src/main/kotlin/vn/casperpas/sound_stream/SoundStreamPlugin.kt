@@ -199,7 +199,7 @@ public class SoundStreamPlugin : FlutterPlugin,
         debugLogging = call.argument<Boolean>("showLogs") ?: false
         mPeriodFrames = AudioRecord.getMinBufferSize(mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat)
         mRecorderBufferSize = mPeriodFrames * 2
-        audioData = ShortArray(2730)
+        audioData = ShortArray(mPeriodFrames)
         activeResult = result
 
         val localContext = pluginContext
