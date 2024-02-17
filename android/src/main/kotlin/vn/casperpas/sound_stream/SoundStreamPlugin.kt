@@ -200,9 +200,7 @@ public class SoundStreamPlugin : FlutterPlugin,
         mPeriodFrames = AudioRecord.getMinBufferSize(mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat)
         mRecorderBufferSize = mPeriodFrames * 2
         println("mRecordSampleRate is: $mRecordSampleRate")
-        println("AudioFormat.CHANNEL_IN_MONO is: $AudioFormat.CHANNEL_IN_MONO")
         println("mPeriodFrames is: $mPeriodFrames")
-        println("mRecordFormat is: $mRecordFormat")
         audioData = ShortArray(mPeriodFrames)
         activeResult = result
 
