@@ -222,7 +222,7 @@ public class SoundStreamPlugin : FlutterPlugin,
         if (mRecorder?.state == AudioRecord.STATE_INITIALIZED) {
             return
         }
-        mRecorder = AudioRecord(MediaRecorder.AudioSource.MIC, mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat, mRecorderBufferSize)
+        mRecorder = AudioRecord(MediaRecorder.AudioSource.MIC, mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat, 2730)
         if (mRecorder != null) {
             mListener = createRecordListener()
             mRecorder?.positionNotificationPeriod = mPeriodFrames
