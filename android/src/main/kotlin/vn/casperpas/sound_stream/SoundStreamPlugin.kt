@@ -148,9 +148,6 @@ public class SoundStreamPlugin : FlutterPlugin,
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         currentActivity = binding.activity
         binding.addRequestPermissionsResultListener(this)
-
-        val audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
-        audioManager.setVolumeControlStream(AudioManager.STREAM_MUSIC)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -318,7 +315,6 @@ public class SoundStreamPlugin : FlutterPlugin,
         val audioAttributes = AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
                 .build()
         mAudioTrack = AudioTrack(audioAttributes, mPlayerFormat, mPlayerBufferSize, AudioTrack.MODE_STREAM, AudioManager.AUDIO_SESSION_ID_GENERATE)
         result.success(true)
