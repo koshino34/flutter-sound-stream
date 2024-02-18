@@ -35,7 +35,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private var mRecordFormat: AVAudioFormat!
     
     //========= Player's vars
-    private let PLAYER_OUTPUT_SAMPLE_RATE: Double = 32000   // 32Khz
+    private let PLAYER_OUTPUT_SAMPLE_RATE: Double = 16000   // 32Khz
     private let mPlayerBus = 0
     private let mPlayerNode = AVAudioPlayerNode()
     private var mPlayerSampleRate: Double = 16000 // 16Khz
@@ -197,7 +197,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         let input = mAudioEngine.inputNode
         let inputFormat = input.inputFormat(forBus: mRecordBus)
         let converter = AVAudioConverter(from: inputFormat, to: mRecordFormat!)!
-        let ratio: Float = 3.0 // Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
+        let ratio: Float = Float(inputFormat.sampleRate)/Float(mRecordFormat.sampleRate)
 
         print("inputFormat Sample Rate: \(inputFormat.sampleRate), mRecordFormat Sample Rate: \(mRecordFormat.sampleRate)")
         
