@@ -148,6 +148,7 @@ public class SoundStreamPlugin : FlutterPlugin,
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         currentActivity = binding.activity
         binding.addRequestPermissionsResultListener(this)
+        setVolumeControlStream(AudioManager.STREAM_MUSIC)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
